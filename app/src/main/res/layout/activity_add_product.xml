@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context="alexfiweb.myPharmacy.AddProduct">
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nombre"
+        android:padding="15dp">
+
+        <EditText
+            android:id="@+id/nameInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Descripción"
+        android:padding="15dp">
+
+        <EditText
+            android:id="@+id/descInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Referencia"
+        android:padding="15dp">
+
+        <EditText
+            android:id="@+id/refInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="18dp" />
+
+    <Button
+        android:id="@+id/buttonUploadImg"
+        android:layout_width="327dp"
+        android:layout_height="wrap_content"
+        android:text="Subir imagen" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="256dp" />
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="327dp"
+        android:layout_height="wrap_content"
+        android:background="#3F51B5"
+        android:baselineAligned="false"
+        android:onClick="saveProduct"
+        android:text="Guardar"
+        android:textColor="#FFFFFF" />
+
+</LinearLayout>

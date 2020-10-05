@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "351503963100",
+    "firebase_url": "https://mypharmacy-b0cae.firebaseio.com",
+    "project_id": "mypharmacy-b0cae",
+    "storage_bucket": "mypharmacy-b0cae.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:351503963100:android:f726068c030a9c602a3519",
+        "android_client_info": {
+          "package_name": "alexfiweb.myPharmacy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "351503963100-odl9edlnt1jlj5h5a9hpj4t4i55qid7p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZKwVfB_YBF2mNrZ2kBfLEB12FSG1ZydM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "351503963100-odl9edlnt1jlj5h5a9hpj4t4i55qid7p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
