@@ -1,5 +1,6 @@
 package alexfiweb.myPharmacy;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
@@ -48,6 +50,8 @@ public class CustomAdapter extends BaseAdapter {
         TextView name = (TextView) view.findViewById(R.id.name);
         TextView description = (TextView) view.findViewById(R.id.description);
         ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
+        @SuppressLint("WrongViewCast")
+        RelativeLayout productLayout = (RelativeLayout) view.findViewById(R.id.productLayout);
         final DataModel product;
         product = listProducts.get(position);
         Context context = imageView.getContext();
@@ -65,6 +69,18 @@ public class CustomAdapter extends BaseAdapter {
                 Intent fullScreenImageView = new Intent(mContext, FullScreenImageView.class);
                 fullScreenImageView.putExtra("IMG", product.getImage());
                 mContext.startActivity(fullScreenImageView);
+            }
+        });
+
+        productLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent productView = new Intent(mContext, ProductView.class);
+                productView.putExtra("IMG", product.getImage());
+                productView.putExtra("NAME", product.getName());
+                productView.putExtra("DESC", product.getDescription());
+                productView.putExtra("REF", product.getRef());
+                mContext.startActivity(productView);
             }
         });
 

@@ -59,11 +59,11 @@
         android:id="@+id/buttonUploadImg"
         android:layout_width="327dp"
         android:layout_height="wrap_content"
-        android:text="Subir imagen" />
+        android:text="Seleccionar imagen" />
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="256dp" />
+        android:layout_height="263dp" />
 
     <Button
         android:id="@+id/saveButton"

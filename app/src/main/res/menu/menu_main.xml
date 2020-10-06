@@ -7,4 +7,9 @@
         android:icon="@drawable/ic_add"
         android:title="Edit Done"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/icon_account"
+        android:icon="@drawable/ic_account"
+        android:title="Inventory"
+        app:showAsAction="always" />
 </menu>

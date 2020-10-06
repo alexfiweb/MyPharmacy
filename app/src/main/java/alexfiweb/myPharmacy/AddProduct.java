@@ -73,6 +73,10 @@ public class AddProduct extends AppCompatActivity {
         } else if (ref.equals("")) {
             this.ref.setError("Campo obligatorio");
         } else {
+            progressDialog.setTitle("Cargando...");
+            progressDialog.setMessage("Subiendo producto");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
             final DataModel product = new DataModel();
             product.setId(UUID.randomUUID().toString());
             product.setName(name);
@@ -87,11 +91,12 @@ public class AddProduct extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Uri> task) {
                                 String downloadUrl = task.getResult().toString();
-                                System.out.println(downloadUrl);
                                 product.setImage(downloadUrl);
                                 databaseReference.child("productos").child(product.getId()).setValue(product);
-                                Toast.makeText(AddProduct.this, "¡Producto guardado!", Toast.LENGTH_LONG).show();
-                                // downloadurl will be the resulted answer
+                                progressDialog.dismiss();
+                                Intent mainActivityView = new Intent(AddProduct.this, MainActivity.class);
+                                AddProduct.this.startActivity(mainActivityView);
+                                Toast.makeText(AddProduct.this, "¡Producto guardado con éxito!", Toast.LENGTH_LONG).show();
                             }
                         });
                     }
@@ -104,11 +109,6 @@ public class AddProduct extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == GALLERY_INTENT && resultCode == RESULT_OK) {
-            //progressDialog.setTitle("Cargando...");
-            //progressDialog.setMessage("Cargando imagen");
-            //progressDialog.setCancelable(false);
-            //progressDialog.show();
-            //progressDialog.dismiss();
             uriImage = data.getData();
         }
     }
