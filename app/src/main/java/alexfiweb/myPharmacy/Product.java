@@ -1,6 +1,6 @@
 package alexfiweb.myPharmacy;
 
-public class DataModel {
+public class Product {
     private String id;
     private String name;
     private String description;
@@ -32,11 +32,11 @@ public class DataModel {
     }
 
     public String getName() {
-        return name;
+        return name.substring(0,1).toUpperCase() + name.substring(1).toLowerCase();
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name.substring(0,1).toUpperCase() + name.substring(1).toLowerCase();
     }
 
     public String getDescription() {

@@ -13,8 +13,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
@@ -33,15 +33,19 @@ import static android.Manifest.permission.CAMERA;
 public class MainActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
-    List<DataModel> listProducts = new ArrayList<>();
+    DatabaseReference databaseReferenceSearch;
+    List<Product> listProducts = new ArrayList<>();
     ListView listView;
     private static final int REQUEST_CAMERA = 1;
     private ZXingScannerView scannerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("Inicio");
         setContentView(R.layout.activity_main);
         listView = (ListView)findViewById(R.id.listView);
+        databaseReferenceSearch = FirebaseDatabase.getInstance().getReference("productos");
         initFirebase();
         initListProduct();
     }
@@ -52,10 +56,10 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 listProducts.clear();
                 for (DataSnapshot objSnapshot : dataSnapshot.getChildren()) {
-                    DataModel product = objSnapshot.getValue(DataModel.class);
+                    Product product = objSnapshot.getValue(Product.class);
                     listProducts.add(product);
                 }
-                listView.setAdapter(new CustomAdapter(MainActivity.this, listProducts));
+                listView.setAdapter(new CustomAdapter(MainActivity.this, listProducts, "home"));
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -66,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main,menu);
+        menu.getItem(1).setVisible(true);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -75,6 +80,10 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
             case R.id.icon_add:
                 Intent addProductView = new Intent(this, AddProduct.class);
                 this.startActivity(addProductView);
+                break;
+            case R.id.icon_account:
+                Intent inventoryView = new Intent(this, InventoryPage.class);
+                this.startActivity(inventoryView);
                 break;
         }
         return true;
@@ -86,19 +95,9 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         databaseReference = firebaseDatabase.getReference();
     }
 
-    public void prueba(View view) {
+    public void scanProduct(View view) {
         scannerView = new ZXingScannerView(this);
         setContentView(scannerView);
-
-        /*if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if(checkPermission()) {
-                Toast.makeText(MainActivity.this, "Permission is granted!", Toast.LENGTH_LONG).show();
-
-            } else
-            {
-                requestPermissions();
-            }
-        }*/
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if(checkPermission()) {
                 if(scannerView == null) {
@@ -158,11 +157,10 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
             scannerView = null;
             setContentView(R.layout.activity_main);
             listView = (ListView)findViewById(R.id.listView);
-            listView.setAdapter(new CustomAdapter(this, listProducts));
+            listView.setAdapter(new CustomAdapter(this, listProducts, "home"));
         } else {
             super.onBackPressed();
         }
-
     }
 
     @Override
@@ -174,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         }
         setContentView(R.layout.activity_main);
         listView = (ListView)findViewById(R.id.listView);
-        listView.setAdapter(new CustomAdapter(this, listProducts));
+        listView.setAdapter(new CustomAdapter(this, listProducts, "home"));
     }
 
     public void displayAlertMessage(String message, DialogInterface.OnClickListener listener) {
@@ -194,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         builder.setTitle("Resultado");
         setContentView(R.layout.activity_main);
         listView = (ListView)findViewById(R.id.listView);
-        listView.setAdapter(new CustomAdapter(this, listProducts));
+        listView.setAdapter(new CustomAdapter(this, listProducts, "home"));
         boolean productExist = false;
         String imageUrl = "";
         for (int i = 0; i < listProducts.size(); i++) {
@@ -227,5 +225,23 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
             AlertDialog alert = builder.create();
             alert.show();
         }
+    }
+
+    public void searchProduct(View view) {
+        TextView s = (TextView) findViewById(R.id.search_field);
+        databaseReference.child("productos").orderByChild("name").startAt(s.getText().toString().toLowerCase()).endAt(s.getText().toString().toLowerCase()+"\uf8ff").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                listProducts.clear();
+                for (DataSnapshot objSnapshot : dataSnapshot.getChildren()) {
+                    Product product = objSnapshot.getValue(Product.class);
+                    listProducts.add(product);
+                }
+                listView.setAdapter(new CustomAdapter(MainActivity.this, listProducts, "home"));
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
     }
 }

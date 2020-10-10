@@ -17,10 +17,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ProductView"></activity>
+        <activity android:name=".InventoryPage"></activity>
+        <activity android:name=".ProductView" />
         <activity android:name=".AddProduct" />
         <activity android:name=".FullScreenImageView" />
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:windowSoftInputMode="stateVisible|adjustNothing">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

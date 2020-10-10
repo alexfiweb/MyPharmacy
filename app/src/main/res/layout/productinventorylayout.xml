@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/productInventoryLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageInventoryView"
+        android:layout_width="98dp"
+        android:layout_height="94dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginLeft="12dp"
+        app:srcCompat="@android:drawable/sym_def_app_icon" />
+
+    <TextView
+        android:id="@+id/nameInventory"
+        android:layout_width="229dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="14dp"
+        android:layout_toStartOf="@+id/deleteProduct"
+        android:layout_toEndOf="@+id/imageInventoryView"
+        android:text="TextView"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/descriptionInventory"
+        android:layout_width="228dp"
+        android:layout_height="36dp"
+        android:layout_below="@+id/nameInventory"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="14dp"
+        android:layout_toStartOf="@+id/deleteProduct"
+        android:layout_toEndOf="@+id/imageInventoryView"
+        android:text="TextView" />
+
+    <ImageButton
+        android:id="@+id/deleteProduct"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="46dp"
+        android:layout_marginEnd="26dp"
+        android:background="@color/colorPrimary"
+        android:baselineAligned="false"
+        android:drawableLeft="@drawable/ic_delete"
+        app:srcCompat="@drawable/ic_delete" />
+</RelativeLayout>

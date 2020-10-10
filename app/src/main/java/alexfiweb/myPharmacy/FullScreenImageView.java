@@ -13,8 +13,8 @@ public class FullScreenImageView extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("Inicio");
         setContentView(R.layout.activity_image_view);
-
         ImageView imageView = (ImageView) findViewById(R.id.imageViewFull);
         Intent intent = getIntent();
         Bundle b = intent.getExtras();

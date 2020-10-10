@@ -63,16 +63,19 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="263dp" />
+        android:layout_height="230dp" />
 
     <Button
         android:id="@+id/saveButton"
-        android:layout_width="327dp"
+        android:layout_width="227dp"
         android:layout_height="wrap_content"
-        android:background="#3F51B5"
+        android:background="@drawable/rounded_button"
         android:baselineAligned="false"
         android:onClick="saveProduct"
-        android:text="Guardar"
+        android:text="Subir"
+        android:paddingLeft="16dp"
+        android:paddingRight="45dp"
+        android:drawableLeft="@drawable/ic_upload"
         android:textColor="#FFFFFF" />
 
 </LinearLayout>

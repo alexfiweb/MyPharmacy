@@ -11,5 +11,12 @@
         android:id="@+id/icon_account"
         android:icon="@drawable/ic_account"
         android:title="Inventory"
+        android:visible="false"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/icon_home"
+        android:icon="@drawable/ic_home"
+        android:title="Home"
+        android:visible="false"
         app:showAsAction="always" />
 </menu>

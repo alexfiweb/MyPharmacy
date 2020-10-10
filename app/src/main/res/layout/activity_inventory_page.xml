@@ -7,7 +7,7 @@
     android:background="#FFFFFF"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".InventoryPage">
 
 
     <android.support.constraint.ConstraintLayout
@@ -18,7 +18,7 @@
         android:paddingBottom="10dp">
 
         <EditText
-            android:id="@+id/search_field"
+            android:id="@+id/search_inventory_field"
             android:layout_width="222dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="44dp"
@@ -37,7 +37,7 @@
             app:layout_constraintVertical_bias="0.476" />
 
         <ImageButton
-            android:id="@+id/searchButton"
+            android:id="@+id/searchInventoryButton"
             android:layout_width="46dp"
             android:layout_height="45dp"
             android:background="@drawable/search_button"
@@ -45,28 +45,15 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.292"
-            app:layout_constraintStart_toEndOf="@+id/search_field"
+            app:layout_constraintStart_toEndOf="@+id/search_inventory_field"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_search" />
     </android.support.constraint.ConstraintLayout>
 
     <ListView
-        android:id="@+id/listView"
+        android:id="@+id/listViewInventory"
         android:layout_width="match_parent"
-        android:layout_height="512dp" />
+        android:layout_height="wrap_content" />
 
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="227dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rounded_button"
-        android:baselineAligned="false"
-        android:drawableLeft="@drawable/ic_camera"
-        android:onClick="scanProduct"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:text="@string/button"
-        android:textColor="#FFFFFF" />
 
 </LinearLayout>
