@@ -57,6 +57,7 @@ public class ProductView extends AppCompatActivity {
         databaseReference = firebaseDatabase.getReference();
     }
 
+    /* Funcion que ejecuta el boton añadir producto al inventario, que lo que hace es guardar en producto en la base de datos del usuario */
     public void addProductUserInventory(View view) {
         databaseReference.child("usuarios").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

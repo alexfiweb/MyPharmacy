@@ -84,6 +84,7 @@ public class CustomAdapter extends BaseAdapter {
         int idName = 0;
         int idDesc = 0;
         int idImage = 0;
+        // Comprobamos si llamamos a esta clase desde home o inventory para usar un layout u otro
         if (calledFrom.equals("home")) {
             idResource = R.layout.productlayout;
             idName = R.id.name;
@@ -113,6 +114,7 @@ public class CustomAdapter extends BaseAdapter {
         name.setText(product.getName().substring(0,1).toUpperCase() + product.getName().substring(1));
         description.setText(product.getDescription());
 
+        /* Añadimos un listener al boton de borrar (icono de papelera) de los productos de nuestro inventario, que añade la funcionalidad de borrar el producto seleccionado de la base de datos */
         ImageButton buttonDelete = (ImageButton) view.findViewById(R.id.deleteProduct);
         if (buttonDelete != null) {
             buttonDelete.setOnClickListener(new View.OnClickListener() {
@@ -135,6 +137,7 @@ public class CustomAdapter extends BaseAdapter {
             });
         }
 
+        /* Añadimos un listener a la imagen de los productos, y si pinchas te lleva a una vista con la imagen ampliada */
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -144,6 +147,7 @@ public class CustomAdapter extends BaseAdapter {
             }
         });
 
+        /* Añadimos un listener al producto, y si pinchas te lleva a una vista con toda la informacion de ese producto */
         productLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -18,7 +18,7 @@ public class FullScreenImageView extends AppCompatActivity {
         ImageView imageView = (ImageView) findViewById(R.id.imageViewFull);
         Intent intent = getIntent();
         Bundle b = intent.getExtras();
-
+        // Se comprueba si se le ha pasado una imagen a la vista, y se pinta en el imageView
         if(b!=null) {
             Uri uri = Uri.parse(b.getString("IMG"));
             Glide.with(this)

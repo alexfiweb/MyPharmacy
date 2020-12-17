@@ -43,6 +43,7 @@ public class InventoryPage extends AppCompatActivity {
         databaseReference = firebaseDatabase.getReference();
     }
 
+    /* Obtenemos los productos del inventario de un usuario de la base de datos y se la pasamos a nuestra listView para que la pinte */
     private void initListProduct() {
         databaseReference.child("usuarios").addValueEventListener(new ValueEventListener() {
             @Override
@@ -76,6 +77,7 @@ public class InventoryPage extends AppCompatActivity {
         });
     }
 
+    /* Añadimos en la barra superior de nuestra aplicacion, un menu que hemos creado con tres botones, los cuales haremos visible segun en que pantalla nos encontremos */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main,menu);
@@ -83,6 +85,7 @@ public class InventoryPage extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    /* Mediante un switch case le asignamos la funcionalidad a los botones del menu superior de nuestra aplicacion */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -98,6 +101,7 @@ public class InventoryPage extends AppCompatActivity {
         return true;
     }
 
+    /* Funcion del buscador para buscar un producto en la base de datos, se realiza de tal manera con toString y toLowerCase para que la busqueda no sea caseSensitive */
     public void searchProduct(View view) {
         TextView s = (TextView) findViewById(R.id.search_inventory_field);
         if (s.getText().toString().toLowerCase().equals("")) {

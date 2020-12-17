@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         initListProduct();
     }
 
+    /* Obtenemos todos los productos de la base de datos y se la pasamos a nuestra listView para que la pinte */
     private void initListProduct() {
         databaseReference.child("productos").addValueEventListener(new ValueEventListener() {
             @Override
@@ -67,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         });
     }
 
+    /* Añadimos en la barra superior de nuestra aplicacion, un menu que hemos creado con tres botones, los cuales haremos visible segun en que pantalla nos encontremos */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main,menu);
@@ -74,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         return super.onCreateOptionsMenu(menu);
     }
 
+    /* Mediante un switch case le asignamos la funcionalidad a los botones del menu superior de nuestra aplicacion */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -89,12 +92,14 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         return true;
     }
 
+    /* Inicializamos la base de datos creando la instancia y obteniendo la referencia */
     private void initFirebase() {
         FirebaseApp.initializeApp(this);
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
     }
 
+    /* Inicializamos nuestro objeto scannerView y comprobamos si tenemos los permisos de la camara, y si los tenemos, abrimos la vista para escanear */
     public void scanProduct(View view) {
         scannerView = new ZXingScannerView(this);
         setContentView(scannerView);
@@ -112,14 +117,17 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         }
     }
 
+    /* Se comprueba si se tienen los permisos de la camara */
     private boolean checkPermission() {
         return (ContextCompat.checkSelfPermission(MainActivity.this, CAMERA) == PackageManager.PERMISSION_GRANTED);
     }
 
+    /* Metodo para solicitar los permisos de la camara */
     private void requestPermissions() {
         ActivityCompat.requestPermissions(this, new String[]{CAMERA}, REQUEST_CAMERA);
     }
 
+    /* Controlamos la accion del usuario para dar o denegar acceso a la camara */
     public void onRequestPermissionsResult(int requestCode, String permission[], int grantResult[]) {
         switch (requestCode) {
             case REQUEST_CAMERA:
@@ -151,6 +159,7 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         }
     }
 
+    /* Controlamos que si el usuario le da al boton de atras en la aplicacion, se pare la camara y se deje de motrar la vista de escaneo en caso de estar abierta */
     public void onBackPressed() {
         if (scannerView != null) {
             scannerView.stopCamera();
@@ -184,6 +193,7 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
                 .show();
     }
 
+    /* Manejamos el resultado del escaneo de la camara */
     @Override
     public void handleResult(Result result) {
         final String scanResult = result.getText();
@@ -195,6 +205,7 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         listView.setAdapter(new CustomAdapter(this, listProducts, "home"));
         boolean productExist = false;
         String imageUrl = "";
+        /* Comprobamos si la referencia del codigo de barras coincide con algun producto de nuestra base de datos */
         for (int i = 0; i < listProducts.size(); i++) {
             if(scanResult.toLowerCase().equals(listProducts.get(i).getRef().toLowerCase())) {
                 imageUrl = listProducts.get(i).getImage();
@@ -202,11 +213,14 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
                 break;
             }
         }
+        /* Si existe nos abre la vista con la informacion del producto */
         if(productExist) {
             Intent fullScreenImageView = new Intent(this, FullScreenImageView.class);
             fullScreenImageView.putExtra("IMG", imageUrl);
             this.startActivity(fullScreenImageView);
-        } else {
+        }
+        /* Si no existe nos abre un dialogo donde podemos cerrarlo y volver a la pantalla principal, o crear un nuevo producto yendo a la pantalla de agregar productos */
+        else {
             message = "El producto con referencia "+scanResult+" no existe";
             builder.setMessage(message);
             builder.setNeutralButton("Salir", new DialogInterface.OnClickListener() {
@@ -227,11 +241,13 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         }
     }
 
+    /* Funcion del buscador para buscar un producto en la base de datos, se realiza de tal manera con toString y toLowerCase para que la busqueda no sea caseSensitive */
     public void searchProduct(View view) {
         TextView s = (TextView) findViewById(R.id.search_field);
         databaseReference.child("productos").orderByChild("name").startAt(s.getText().toString().toLowerCase()).endAt(s.getText().toString().toLowerCase()+"\uf8ff").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                /* Se limpia la lista y se settean solo los productos encontrados */
                 listProducts.clear();
                 for (DataSnapshot objSnapshot : dataSnapshot.getChildren()) {
                     Product product = objSnapshot.getValue(Product.class);

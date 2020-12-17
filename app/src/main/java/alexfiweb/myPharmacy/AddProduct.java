@@ -44,6 +44,7 @@ public class AddProduct extends AppCompatActivity {
         desc = findViewById(R.id.descInput);
         ref = findViewById(R.id.refInput);
         uploadImgButton = (Button) findViewById(R.id.buttonUploadImg);
+        /* Agregamos un listener al boton de subir imagen */
         uploadImgButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,6 +55,7 @@ public class AddProduct extends AppCompatActivity {
         });
     }
 
+    /* Inicializamos la base de datos creando la instancia y obteniendo la referencia */
     private void initFirebase() {
         FirebaseApp.initializeApp(this);
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -61,10 +63,12 @@ public class AddProduct extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference();
     }
 
+    /* Funcion que se ejecuta cuando le damos al boton subir producto */
     public void saveProduct(View view) {
         String name = this.name.getText().toString();
         String desc = this.desc.getText().toString();
         String ref = this.ref.getText().toString();
+        // Validamos que los campos del form no esten vacios
         if (name.equals("")) {
             this.name.setError("Campo obligatorio");
         } else if (desc.equals("")) {
@@ -76,14 +80,17 @@ public class AddProduct extends AppCompatActivity {
             progressDialog.setMessage("Subiendo producto");
             progressDialog.setCancelable(false);
             progressDialog.show();
+            // Creamos un producto y le asignamos los valores del formulario
             final Product product = new Product();
             product.setId(UUID.randomUUID().toString());
             product.setName(name.toLowerCase());
             product.setDescription(desc);
             product.setRef(ref);
+            // Si la uri de la imagen no esta vacia, guardamos la imagen en el store de la base de datos
             if (uriImage != null) {
                 final StorageReference filePath = storageReference.child("images").child(uriImage.getLastPathSegment());
                 filePath.putFile(uriImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    // Si se ha subido la imagen correctamente, sacamos la url de descarga y se la setteamos a nuestro producto, y guardamos el producto en la base de datos
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         filePath.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
@@ -104,6 +111,7 @@ public class AddProduct extends AppCompatActivity {
         }
     }
 
+    /* Se ejecuta cuando el usuario selecciona una imagen, y esta funcion guarda la uri en la variable uriImage */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
